@@ -1,4 +1,4 @@
-<?php namespace Torann\GeoIP;
+<?php namespace Keios\GeoIP;
 
 use GeoIp2\Database\Reader;
 use GeoIp2\WebService\Client;

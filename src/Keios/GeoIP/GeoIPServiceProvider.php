@@ -1,4 +1,4 @@
-<?php namespace Torann\GeoIP;
+<?php namespace Keios\GeoIP;
 
 use Illuminate\Support\ServiceProvider;
 
