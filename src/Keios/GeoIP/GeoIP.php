@@ -8,7 +8,7 @@ use Monolog\Handler\StreamHandler;
 
 use GeoIp2\Exception\AddressNotFoundException;
 
-use Illuminate\Config\Repository;
+use October\Rain\Config\Repository;
 use Illuminate\Session\Store as SessionStore;
 
 class GeoIP {
@@ -174,12 +174,11 @@ class GeoIP {
 	{
 		$settings = $this->config->get('geoip.maxmind');
 
-		if($settings['type'] === 'web_service') {
-			$maxmind = new Client($settings['user_id'], $settings['license_key']);
-		}
-		else {
-			$maxmind = new Reader(base_path().'/database/maxmind/GeoLite2-City.mmdb');
-		}
+        if ($settings['type'] === 'web_service') {
+            $maxmind = new Client($settings['user_id'], $settings['license_key']);
+        } else {
+            $maxmind = new Reader($settings['database_path']);
+        }
 
         try {
             $record = $maxmind->city($ip);
