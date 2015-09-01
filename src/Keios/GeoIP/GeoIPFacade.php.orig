@@ -1,0 +1,24 @@
+<?php namespace Keios\GeoIP;
+
+use Illuminate\Support\Facades\Facade;
+
+class GeoIPFacade extends Facade {
+<<<<<<< HEAD:src/Keios/GeoIP/GeoIPFacade.php
+    /**
+     * Get the registered name of the component.
+     *
+     * @return string
+     */
+    protected static function getFacadeAccessor() { return 'geoip'; }
+    
+=======
+
+	/**
+	 * Get the registered name of the component.
+	 *
+	 * @return string
+	 */
+	protected static function getFacadeAccessor() { return 'geoip'; }
+
+>>>>>>> upstream/master:src/Torann/GeoIP/GeoIPFacade.php
+}

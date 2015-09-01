@@ -1,7 +1,7 @@
 <?php namespace Keios\GeoIP;
 
 use Illuminate\Support\ServiceProvider;
-use Keios\GeoIP\Console\UpdateCommand;
+use Torann\GeoIP\Console\UpdateCommand;
 
 class GeoIPServiceProvider extends ServiceProvider {
 
@@ -19,9 +19,17 @@ class GeoIPServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
+<<<<<<< HEAD:src/Keios/GeoIP/GeoIPServiceProvider.php
+		//$this->package('keios/geoip');
+		$app = $this->app;
+        $this->publishes([
+            __DIR__.'/../../config/geoip.php' => config_path('geoip.php'),
+        ]);
+=======
 		$this->publishes([
 			__DIR__.'/../../config/geoip.php' => config_path('geoip.php'),
 		]);
+>>>>>>> upstream/master:src/Torann/GeoIP/GeoIPServiceProvider.php
 	}
 
 	/**

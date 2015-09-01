@@ -12,7 +12,6 @@ Determine the geographical location of website visitors based on their IP addres
 - [GeoIP for Laravel 5 on GitHub](https://github.com/Torann/laravel-geoip)
 - [Laravel 4 Installation](https://github.com/Torann/laravel-geoip/tree/0.1.1)
 
-
 To get the latest version of GeoIP simply require it in your `composer.json` file.
 
 ~~~
@@ -51,6 +50,13 @@ $ php artisan vendor:publish
 
 A configuration file will be publish to `config/geoip.php`
 
+### Update max mind cities database
+
+~~~
+$ php artisan geoip:update
+~~~
+
+**Database Service**: To use the database version of [MaxMind](http://www.maxmind.com) services download the `GeoLite2-City.mmdb` from [http://dev.maxmind.com/geoip/geoip2/geolite2/](http://dev.maxmind.com/geoip/geoip2/geolite2/) and extract it to `storage/app/geoip.mmdb`. And that's it.
 
 ## Usage
 
@@ -90,13 +96,15 @@ array (
 
 In the case that a location is not found the fallback location will be returned with the `default` parameter set to `true`. To set your own default change it in the configurations `config/geoip.php`
 
-## Services
-
-### [MaxMind](http://www.maxmind.com)
-
-- **Database Service**: To use the database version of MaxMind services download the `GeoLite2-City.mmdb` from [http://dev.maxmind.com/geoip/geoip2/geolite2/](http://dev.maxmind.com/geoip/geoip2/geolite2/) and extract it to `database/maxmind/`. And that's it.
-
 ## Change Log
+
+#### v0.2.1
+
+- Add database_path to config
+- Add update_url to config
+- Add GeoIP database update command "php artisan geoip:update"
+- Add some test
+- Format code
 
 #### v0.2.0
 

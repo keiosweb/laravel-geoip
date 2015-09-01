@@ -2,6 +2,17 @@
 
 return array(
 
+<<<<<<< HEAD
+    // Service (only maxmind so far)
+    'service' => 'maxmind',
+
+    'maxmind' => array(
+        'type'          => 'database', // database or web_service
+        'user_id'       => '',
+        'license_key'   => '',
+        'database_path' => ''
+    )
+=======
 	/*
 	|--------------------------------------------------------------------------
 	| Service
@@ -52,4 +63,5 @@ return array(
 		"continent"    => "NA",
 	),
 
+>>>>>>> upstream/master
 );
