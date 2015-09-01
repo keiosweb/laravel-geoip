@@ -8,7 +8,7 @@ use Monolog\Handler\StreamHandler;
 
 use GeoIp2\Exception\AddressNotFoundException;
 
-use October\Rain\Config\Repository;
+use Illuminate\Contracts\Config\Repository;
 use Illuminate\Session\Store as SessionStore;
 
 class GeoIP {
@@ -79,7 +79,7 @@ class GeoIP {
 	/**
 	 * Create a new GeoIP instance.
 	 *
-     * @param  \Illuminate\Config\Repository  $config
+     * @param  \Illuminate\Contracts\Config\Repository $config
 	 * @param  \Illuminate\Session\Store      $session
 	 */
 	public function __construct(Repository $config, SessionStore $session)
