@@ -1,7 +1,7 @@
-<?php namespace Torann\GeoIP;
+<?php namespace Keios\GeoIP;
 
 use GuzzleHttp\Client as Client;
-use Illuminate\Config\Repository;
+use Illuminate\Contracts\Config\Repository;
 
 class GeoIPUpdater
 {
@@ -16,7 +16,7 @@ class GeoIPUpdater
 	protected $client;
 
 	/**
-	 * @param array $config
+	 * @param \Illuminate\Contracts\Config\Repository $config
 	 */
 	public function __construct(Repository $config)
 	{

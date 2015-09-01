@@ -11,7 +11,8 @@ use GeoIp2\Exception\AddressNotFoundException;
 use Illuminate\Contracts\Config\Repository;
 use Illuminate\Session\Store as SessionStore;
 
-class GeoIP {
+class GeoIP
+{
 
 	/**
 	 * The session store.
@@ -20,12 +21,12 @@ class GeoIP {
 	 */
 	protected $session;
 
-        /**
-         * Illuminate config repository instance.
-         *
-         * @var \Illuminate\Contracts\Config\Repository
-         */
-        protected $config;
+	/**
+	 * Illuminate config repository instance.
+	 *
+	 * @var \Illuminate\Contracts\Config\Repository
+	 */
+	protected $config;
 
 	/**
 	 * Remote Machine IP address.
@@ -46,51 +47,51 @@ class GeoIP {
 	 *
 	 * @var array
 	 */
-	protected $reserved_ips = array (
-		array('0.0.0.0','2.255.255.255'),
-		array('10.0.0.0','10.255.255.255'),
-		array('127.0.0.0','127.255.255.255'),
-		array('169.254.0.0','169.254.255.255'),
-		array('172.16.0.0','172.31.255.255'),
-		array('192.0.2.0','192.0.2.255'),
-		array('192.168.0.0','192.168.255.255'),
-		array('255.255.255.0','255.255.255.255'),
-	);
+	protected $reserved_ips = [
+		['0.0.0.0', '2.255.255.255'],
+		['10.0.0.0', '10.255.255.255'],
+		['127.0.0.0', '127.255.255.255'],
+		['169.254.0.0', '169.254.255.255'],
+		['172.16.0.0', '172.31.255.255'],
+		['192.0.2.0', '192.0.2.255'],
+		['192.168.0.0', '192.168.255.255'],
+		['255.255.255.0', '255.255.255.255'],
+	];
 
 	/**
 	 * Default Location data.
 	 *
 	 * @var array
 	 */
-	protected $default_location = array (
-		"ip" 			=> "127.0.0.0",
-		"isoCode" 		=> "US",
-		"country" 		=> "United States",
-		"city" 			=> "New Haven",
-		"state" 		=> "CT",
-		"postal_code"           => "06510",
-		"lat" 			=> 41.31,
-		"lon" 			=> -72.92,
-		"timezone" 		=> "America/New_York",
-		"continent"		=> "NA",
-		"default"               => true
-	);
+	protected $default_location = [
+		"ip"          => "127.0.0.0",
+		"isoCode"     => "US",
+		"country"     => "United States",
+		"city"        => "New Haven",
+		"state"       => "CT",
+		"postal_code" => "06510",
+		"lat"         => 41.31,
+		"lon"         => -72.92,
+		"timezone"    => "America/New_York",
+		"continent"   => "NA",
+		"default"     => true
+	];
 
 	/**
 	 * Create a new GeoIP instance.
 	 *
-         * @param  \Illuminate\Contracts\Config\Repository $config
-	 * @param  \Illuminate\Session\Store      $session
+	 * @param  \Illuminate\Contracts\Config\Repository $config
+	 * @param  \Illuminate\Session\Store               $session
 	 */
 	public function __construct(Repository $config, SessionStore $session)
 	{
-		$this->config  = $config;
+		$this->config = $config;
 		$this->session = $session;
 
 		// Set custom default location
 		$this->default_location = array_merge(
 			$this->default_location,
-			$this->config->get('geoip.default_location', array())
+			$this->config->get('geoip.default_location', [])
 		);
 
 		// Set IP
@@ -111,6 +112,7 @@ class GeoIP {
 	 * Get location from IP.
 	 *
 	 * @param  string $ip Optional
+	 *
 	 * @return array
 	 */
 	public function getLocation($ip = null)
@@ -130,6 +132,7 @@ class GeoIP {
 	 * Find location from IP.
 	 *
 	 * @param  string $ip Optional
+	 *
 	 * @return array
 	 * @throws \Exception
 	 */
@@ -151,7 +154,7 @@ class GeoIP {
 			$service = 'locate_'.$this->config->get('geoip.service');
 
 			// Check for valid service
-			if (! method_exists($this, $service)) {
+			if (!method_exists($this, $service)) {
 				throw new \Exception("GeoIP Service not support or setup.");
 			}
 
@@ -167,6 +170,7 @@ class GeoIP {
 	 * Maxmind Service.
 	 *
 	 * @param  string $ip
+	 *
 	 * @return array
 	 */
 	private function locate_maxmind($ip)
@@ -176,8 +180,7 @@ class GeoIP {
 		if (empty($this->maxmind)) {
 			if ($settings['type'] === 'web_service') {
 				$this->maxmind = new Client($settings['user_id'], $settings['license_key']);
-			}
-			else {
+			} else {
 				$this->maxmind = new Reader($settings['database_path']);
 			}
 		}
@@ -185,22 +188,20 @@ class GeoIP {
 		try {
 			$record = $this->maxmind->city($ip);
 
-			$location = array(
-				"ip"			=> $ip,
-				"isoCode" 		=> $record->country->isoCode,
-				"country" 		=> $record->country->name,
-				"city" 			=> $record->city->name,
-				"state" 		=> $record->mostSpecificSubdivision->isoCode,
-				"postal_code"   => $record->postal->code,
-				"lat" 			=> $record->location->latitude,
-				"lon" 			=> $record->location->longitude,
-				"timezone" 		=> $record->location->timeZone,
-				"continent"		=> $record->continent->code,
-				"default"       => false,
-			);
-		}
-		catch (AddressNotFoundException $e)
-		{
+			$location = [
+				"ip"          => $ip,
+				"isoCode"     => $record->country->isoCode,
+				"country"     => $record->country->name,
+				"city"        => $record->city->name,
+				"state"       => $record->mostSpecificSubdivision->isoCode,
+				"postal_code" => $record->postal->code,
+				"lat"         => $record->location->latitude,
+				"lon"         => $record->location->longitude,
+				"timezone"    => $record->location->timeZone,
+				"continent"   => $record->continent->code,
+				"default"     => false,
+			];
+		} catch (AddressNotFoundException $e) {
 			$location = $this->default_location;
 
 			$logFile = 'geoip';
@@ -224,27 +225,32 @@ class GeoIP {
 	{
 		if (getenv('HTTP_CLIENT_IP')) {
 			$ipaddress = getenv('HTTP_CLIENT_IP');
-		}
-		else if (getenv('HTTP_X_FORWARDED_FOR')) {
-			$ipaddress = getenv('HTTP_X_FORWARDED_FOR');
-		}
-		else if (getenv('HTTP_X_FORWARDED')) {
-			$ipaddress = getenv('HTTP_X_FORWARDED');
-		}
-		else if (getenv('HTTP_FORWARDED_FOR')) {
-			$ipaddress = getenv('HTTP_FORWARDED_FOR');
-		}
-		else if (getenv('HTTP_FORWARDED')) {
-			$ipaddress = getenv('HTTP_FORWARDED');
-		}
-		else if (getenv('REMOTE_ADDR')) {
-			$ipaddress = getenv('REMOTE_ADDR');
-		}
-		else if (isset($_SERVER['REMOTE_ADDR'])) {
-			$ipaddress = $_SERVER['REMOTE_ADDR'];
-		}
-		else {
-			$ipaddress = '127.0.0.0';
+		} else {
+			if (getenv('HTTP_X_FORWARDED_FOR')) {
+				$ipaddress = getenv('HTTP_X_FORWARDED_FOR');
+			} else {
+				if (getenv('HTTP_X_FORWARDED')) {
+					$ipaddress = getenv('HTTP_X_FORWARDED');
+				} else {
+					if (getenv('HTTP_FORWARDED_FOR')) {
+						$ipaddress = getenv('HTTP_FORWARDED_FOR');
+					} else {
+						if (getenv('HTTP_FORWARDED')) {
+							$ipaddress = getenv('HTTP_FORWARDED');
+						} else {
+							if (getenv('REMOTE_ADDR')) {
+								$ipaddress = getenv('REMOTE_ADDR');
+							} else {
+								if (isset($_SERVER['REMOTE_ADDR'])) {
+									$ipaddress = $_SERVER['REMOTE_ADDR'];
+								} else {
+									$ipaddress = '127.0.0.0';
+								}
+							}
+						}
+					}
+				}
+			}
 		}
 
 		return $ipaddress;
@@ -260,7 +266,7 @@ class GeoIP {
 		if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
 			$longip = ip2long($ip);
 
-			if (! empty($ip)) {
+			if (!empty($ip)) {
 				foreach ($this->reserved_ips as $r) {
 					$min = ip2long($r[0]);
 					$max = ip2long($r[1]);
@@ -272,8 +278,10 @@ class GeoIP {
 
 				return true;
 			}
-		} else if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
-			return true;
+		} else {
+			if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
+				return true;
+			}
 		}
 
 		return false;

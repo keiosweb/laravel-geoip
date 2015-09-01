@@ -1,8 +1,8 @@
-<?php namespace Torann\GeoIP\Console;
+<?php namespace Keios\GeoIP\Console;
 
-use Illuminate\Config\Repository;
+use Illuminate\Contracts\Config\Repository;
 use Illuminate\Console\Command;
-use Torann\GeoIP\GeoIPUpdater;
+use Keios\GeoIP\GeoIPUpdater;
 
 class UpdateCommand extends Command
 {
@@ -21,14 +21,14 @@ class UpdateCommand extends Command
 	protected $description = 'Update geoip database files to the latest version';
 
 	/**
-	 * @var \Torann\GeoIP\GeoIPUpdater
+	 * @var \Keios\GeoIP\GeoIPUpdater
 	 */
 	protected $geoIPUpdater;
 
 	/**
 	 * Create a new console command instance.
 	 *
-	 * @param \Illuminate\Config\Repository $config
+	 * @param \Illuminate\Contracts\Config\Repository $config
 	 */
 	public function __construct(Repository $config)
 	{

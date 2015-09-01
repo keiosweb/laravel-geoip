@@ -1,7 +1,7 @@
-<?php namespace Torann\GeoIP\tests;
+<?php namespace Keios\GeoIP\tests;
 
 use Illuminate\Config\Repository;
-use \Torann\GeoIP\GeoIPUpdater;
+use Keios\GeoIP\GeoIPUpdater;
 use PHPUnit_Framework_TestCase;
 
 class GeoIPUpdaterTest extends PHPUnit_Framework_TestCase
