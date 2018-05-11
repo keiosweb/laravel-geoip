@@ -35,7 +35,7 @@ class GeoIPServiceProvider extends ServiceProvider {
             return new GeoIP($app['config'], $app["session.store"]);
         });
 
-        $this->app->singleton('command.geoip.updat', function ($app) {
+        $this->app->singleton('command.geoip.update', function ($app) {
             return new UpdateCommand($app['config']);
         });
 
